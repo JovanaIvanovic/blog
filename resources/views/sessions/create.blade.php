@@ -4,7 +4,7 @@
     <div class="col-sm-8">
         <h1>Register</h1>
 
-    <form mathod="POST" action="/register">
+    <form method="POST" action="/register">
 
         {{csrf_field()}}
 
