@@ -3,10 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class SessionsController extends Controller
 {
-    public function create(){
+    public function __construct()
+    {
+        $this->middleware('guest')->except('destroy');
+    }
 
+    public function create(){
+        return view('sessions.create');
+    }
+    public function destroy(){
+        auth()->logout();
+        return redirect()->home();
+    }
+
+    public function store(){
+
+        $user= User::where('email', \request('email'))->first();
+
+        if(!auth()->attempt(\request(['email', 'password'])
+        )){
+            return back()->WithErrors([
+                'message'=>'Please check again'
+            ]);
+        }
+        return redirect()->home();
     }
 }
